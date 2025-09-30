@@ -4,7 +4,7 @@
   "installCommand": "cd frontend && npm install",
   "framework": "nextjs",
   "functions": {
-    "frontend/src/app/api/**/*.ts": {
+    "src/app/api/**/*.ts": {
       "runtime": "nodejs18.x"
     }
   }
