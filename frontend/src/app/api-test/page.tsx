@@ -13,7 +13,7 @@ export default function ApiTestPage() {
     order: '0'
   });
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<object | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,7 @@ export default function ApiTestPage() {
 
       console.log('Creating menu item with payload:', payload);
 
-      const response = await fetch('http://localhost:3001/menu-items', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/menu-items`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ export default function ApiTestPage() {
               <li>2. Select menu ID 3 from the dropdown</li>
               <li>3. Fill in the form above with the same Menu ID (3)</li>
               <li>4. For nested items, use Parent ID from existing items (13, 14, 19)</li>
-              <li>5. Click "Create Menu Item"</li>
+              <li>5. Click &quot;Create Menu Item&quot;</li>
               <li>6. Watch the menu tree update immediately!</li>
             </ol>
           </div>

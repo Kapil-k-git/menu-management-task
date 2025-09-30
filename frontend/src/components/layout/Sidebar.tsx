@@ -9,7 +9,6 @@ import {
   UserGroupIcon,
   TrophyIcon,
   Bars3Icon,
-  XMarkIcon 
 } from '@heroicons/react/24/outline';
 
 interface SidebarProps {
