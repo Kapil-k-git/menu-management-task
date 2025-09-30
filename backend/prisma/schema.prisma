@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Menu {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  items       MenuItem[]
+}
+
+model MenuItem {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?
+  url         String?
+  icon        String?
+  order       Int        @default(0)
+  isActive    Boolean    @default(true)
+  parentId    Int?
+  menuId      Int
+  menu        Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  parent      MenuItem?  @relation("SubItems", fields: [parentId], references: [id], onDelete: Cascade)
+  children    MenuItem[] @relation("SubItems")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([menuId])
+  @@index([parentId])
+}
