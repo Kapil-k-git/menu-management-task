@@ -2,13 +2,19 @@ import { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from './redux';
 import { fetchMenuById } from '@/store/slices/menuSlice';
 
-export const useMenuPolling = (intervalMs: number = 3000) => {
+export const useMenuPolling = (intervalMs: number = 3000, pollingEnabled: boolean = true) => {
   const dispatch = useAppDispatch();
   const { currentMenu } = useAppSelector(state => state.menu);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (!currentMenu) return;
+    if (!currentMenu || !pollingEnabled) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return;
+    }
 
     // Clear any existing interval
     if (intervalRef.current) {
@@ -27,7 +33,7 @@ export const useMenuPolling = (intervalMs: number = 3000) => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [currentMenu?.id, dispatch, intervalMs]);
+  }, [currentMenu, dispatch, intervalMs, pollingEnabled]);
 
   // Cleanup on unmount
   useEffect(() => {

@@ -28,7 +28,7 @@ export default function MenuManagement() {
   const [pollingEnabled, setPollingEnabled] = useState(false); // Disabled for now
 
   // Enable polling when a menu is selected (disabled for debugging)
-  useMenuPolling(pollingEnabled ? 5000 : 0);
+  useMenuPolling(5000, pollingEnabled);
 
   useEffect(() => {
     const initializeApp = async () => {
